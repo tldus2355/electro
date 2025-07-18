@@ -4,7 +4,6 @@ using UnityEngine.UIElements;
 
 public class Electro : MonoBehaviour
 {
-  public int testcnt = 0;
   public MapLoader map;
   private int x = -1;
   private int y = -1;

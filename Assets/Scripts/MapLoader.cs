@@ -14,14 +14,10 @@ public class MapLoader : MonoBehaviour
   {
     if (Input.GetKeyDown(KeyCode.A))
     {
-      this.MapLoadTest();
+      
     }
   }
-
-  public void MapLoadTest()
-  {
-    this.mapdata[0, 0]++;
-  }
+  
 
   private void LoadMap()
   {
