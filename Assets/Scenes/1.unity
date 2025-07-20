@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d739b6ec426b18349bf181a2fc1fc3a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TILE_DIRECTIONS: 200020007500640020006c0020007200
 --- !u!4 &364206389
 Transform:
   m_ObjectHideFlags: 0
@@ -273,6 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 364206388}
+  isMoving: 0
 --- !u!212 &840047978
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -372,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d132aadd991df2e41b42f8b5f09af4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 840047977}
   map: {fileID: 364206388}
 --- !u!4 &1079403633
 Transform:

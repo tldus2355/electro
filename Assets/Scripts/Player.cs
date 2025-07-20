@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
+  private int voltage = 0;
   public MapLoader map;
   public bool isMoving = false; // 플레이어가 움직이는 중인지 여부
   private int x = -1;
@@ -34,6 +35,8 @@ public class Player : MonoBehaviour
       Debug.Log("Error: can't find start tile");
       Debug.Log("from Player.cs");
     }
+
+    this.setVoltage();
   }
 
   // Update is called once per frame
@@ -131,5 +134,10 @@ public class Player : MonoBehaviour
     {
       return 's'; // stop
     }
+  }
+
+  private void setVoltage()
+  {
+    // TODO
   }
 }
