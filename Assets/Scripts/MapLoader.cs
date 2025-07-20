@@ -17,6 +17,10 @@ public class MapLoader : MonoBehaviour
   public const int TILE_DR = 12021; // 아래 오른쪽 연결 (3*7)
   public const int TILE_LR = 12035; // 왼쪽 오른쪽 연결 (5*7)
 
+  public const int TILE_LRUD = 14210; // 왼쪽 오른쪽 위 아래 연결 (2*3*5*7)
+  public const int TILE_ULR = 13070; // 위 왼쪽 오른쪽 연결 (2*5*7)
+  public const int TILE_DLR = 13105; // 아래 왼쪽 오른쪽 연결 (3*5*7)
+
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
@@ -45,9 +49,9 @@ public class MapLoader : MonoBehaviour
     this.mapdata = new int[,] {
       {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
       {TILE_EM, TILE_DR, TILE_LR, TILE_DL, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
-      {TILE_ST, TILE_UL, TILE_EM, TILE_UR, TILE_LR, TILE_LR, TILE_LR, TILE_LR, TILE_LR, TILE_ED},
-      {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
-      {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM}
+      {TILE_ST, TILE_UL, TILE_EM, TILE_UR, TILE_DLR, TILE_LR, TILE_LR, TILE_LR, TILE_LR, TILE_ED},
+      {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_UD, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
+      {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_ED, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM}
     };
   }
 }

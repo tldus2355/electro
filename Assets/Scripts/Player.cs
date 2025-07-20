@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     {
       for (int j = 0; j < this.mapx; j++)
       {
-        if (map.mapdata[i, j] == -1)
+        if (map.mapdata[i, j] == MapLoader.TILE_ST)
         {
           this.y = i;
           this.x = j;
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     if (this.x == -1)
     {
       Debug.Log("Error: can't find start tile");
-      Debug.Log("from Elecrto.cs");
+      Debug.Log("from Player.cs");
     }
   }
 

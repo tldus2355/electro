@@ -24,7 +24,7 @@ public class State : MonoBehaviour
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
-
+    // TODO: 플레이어가 자기 위치 찾은 이후에 실행: 플레이어 위치 화면에 표시하기
   }
 
   // Update is called once per frame
@@ -33,7 +33,7 @@ public class State : MonoBehaviour
     List<char> path = new List<char>();
     if (!this.player.isMoving)
     {
-      if (Input.GetKeyDown(KeyCode.UpArrow)) //TODO: 버튼 두개 동시에 입력받는경우 해결
+      if (Input.GetKeyDown(KeyCode.UpArrow)) //TODO: 버튼 두개 동시에 입력받는경우 해결, 금지된 입력 처리
       {
         path = player.Move('u', 0);
         Debug.Log("Path: " + string.Join(", ", path));
@@ -64,7 +64,7 @@ public class State : MonoBehaviour
   {
     foreach (char dir in path)
     {
-      // 경로에 기본 사각형 스프라이트 표시
+      // 경로에 기본 사각형 스프라이트 표시 TODO: 나중에 애니메이션으로 바꾸기
       GameObject marker = new GameObject("PathMarker");
       marker.transform.position = player.transform.position;
       var sr = marker.AddComponent<SpriteRenderer>();
