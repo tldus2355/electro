@@ -3,7 +3,7 @@ using UnityEngine;
 public class State : MonoBehaviour
 {
   public static State Instance;
-  public Electro electro;
+  public Player player;
   public MapLoader map;
 
   void Awake()
@@ -31,19 +31,19 @@ public class State : MonoBehaviour
   {
     if (Input.GetKeyDown(KeyCode.UpArrow)) //TODO: 버튼 두개 동시에 입력받는경우 해결
     {
-      electro.Move('u');
+      player.Move('u');
     }
     if (Input.GetKeyDown(KeyCode.DownArrow))
     {
-      electro.Move('d');
+      player.Move('d');
     }
     if (Input.GetKeyDown(KeyCode.LeftArrow))
     {
-      electro.Move('l');
+      player.Move('l');
     }
     if (Input.GetKeyDown(KeyCode.RightArrow))
     {
-      electro.Move('r');
+      player.Move('r');
     }
   }
 }

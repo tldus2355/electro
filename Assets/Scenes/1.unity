@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 840047978}
   - component: {fileID: 840047977}
   m_Layer: 0
-  m_Name: Electro
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,7 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de1238a9c2d8e34080b90171210bb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testcnt: 0
   map: {fileID: 364206388}
 --- !u!212 &840047978
 SpriteRenderer:
@@ -373,7 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d132aadd991df2e41b42f8b5f09af4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  electro: {fileID: 840047977}
+  player: {fileID: 0}
   map: {fileID: 364206388}
 --- !u!4 &1079403633
 Transform:
