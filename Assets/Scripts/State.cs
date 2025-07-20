@@ -31,19 +31,19 @@ public class State : MonoBehaviour
   {
     if (Input.GetKeyDown(KeyCode.UpArrow)) //TODO: 버튼 두개 동시에 입력받는경우 해결
     {
-      player.Move('u');
+      player.Move('u', 0);
     }
     if (Input.GetKeyDown(KeyCode.DownArrow))
     {
-      player.Move('d');
+      player.Move('d', 0);
     }
     if (Input.GetKeyDown(KeyCode.LeftArrow))
     {
-      player.Move('l');
+      player.Move('l', 0);
     }
     if (Input.GetKeyDown(KeyCode.RightArrow))
     {
-      player.Move('r');
+      player.Move('r', 0);
     }
   }
 }

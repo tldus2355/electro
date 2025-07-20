@@ -3,6 +3,18 @@ using UnityEngine;
 public class MapLoader : MonoBehaviour
 {
   public int[,] mapdata = new int[5, 10]; //나중에 동적으로 바꾸기, 퍼즐 맵 데이터에 따라 바뀌게
+
+  public char[] TILE_DIRECTIONS = new char[] { ' ', ' ', 'u' , 'd', ' ', 'l', ' ', 'r'};
+  public const int TILE_EMPTY = 0; // 빈 타일
+  // 10000+n+t: 길, n개 연결되어있음
+  // t: u: 2, d: 3, l: 5, r: 7중 연결된 것들의 곱
+  public const int TILE_UD = 12006; // 위 아래 연결 (2*3)
+  public const int TILE_UL = 12010; // 위 왼쪽 연결 (2*5)
+  public const int TILE_UR = 12014; // 위 오른쪽 연결 (2*7)
+  public const int TILE_DL = 12015; // 아래 왼쪽 연결 (3*5)
+  public const int TILE_DR = 12021; // 아래 오른쪽 연결 (3*7)
+  public const int TILE_LR = 12035; // 왼쪽 오른쪽 연결 (5*7)
+
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
