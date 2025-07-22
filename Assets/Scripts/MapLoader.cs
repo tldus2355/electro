@@ -17,6 +17,8 @@ public class MapLoader : MonoBehaviour
   public const int TILE_DR = 12021; // 아래 오른쪽 연결 (3*7)
   public const int TILE_LR = 12035; // 왼쪽 오른쪽 연결 (5*7)
 
+  public const int TILE_LR_UD = 12210;
+
   public const int TILE_LRUD = 14210; // 왼쪽 오른쪽 위 아래 연결 (2*3*5*7)
   public const int TILE_ULR = 13070; // 위 왼쪽 오른쪽 연결 (2*5*7)
   public const int TILE_DLR = 13105; // 아래 왼쪽 오른쪽 연결 (3*5*7)

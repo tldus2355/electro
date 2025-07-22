@@ -114,6 +114,10 @@ public class Player : MonoBehaviour
       else
       {
         nextTile -= 2000;
+        if (nextTile == 210) // 교차 타일
+        {
+          return dir;
+        }
         switch (dir)
         {
           case 'u':
