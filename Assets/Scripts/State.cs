@@ -70,7 +70,7 @@ public class State : MonoBehaviour
       var sr = marker.AddComponent<SpriteRenderer>();
       sr.sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0,0,1,1), new Vector2(0.5f,0.5f));
       sr.color = Color.yellow; // 원하는 색상
-      marker.transform.localScale = new Vector3(100f, 100f, 1); // 크기 조절
+      marker.transform.localScale = new Vector3(50f, 50f, 1); // 크기 조절
       switch (dir)
       {
         case 'u': player.transform.Translate(0, 1, 0); break;
