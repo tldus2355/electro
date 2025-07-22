@@ -1,0 +1,40 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Level1.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "ElectroTileSet.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Level1.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 394,
+                "y": 254
+            }
+        }
+    },
+    "last.imagePath": "D:/Unity/electro/Tiled/TiledsetImg",
+    "map.height": 15,
+    "map.lastUsedFormat": "tmx",
+    "map.width": 25,
+    "openFiles": [
+        "ElectroTileSet.tsx",
+        "Level1.tmx"
+    ],
+    "project": "Electro.tiled-project",
+    "property.type": "int",
+    "recentFiles": [
+        "ElectroTileSet.tsx",
+        "Level1.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.type": 1
+}
