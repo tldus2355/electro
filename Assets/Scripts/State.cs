@@ -35,24 +35,44 @@ public class State : MonoBehaviour
     {
       if (Input.GetKeyDown(KeyCode.UpArrow)) //TODO: 버튼 두개 동시에 입력받는경우 해결, 금지된 입력 처리
       {
+        if (!this.PlayerCanGo('u'))
+        {
+          Debug.Log("Error: can't go up");
+          return;
+        }
         path = player.Move('u', 0);
         Debug.Log("Path: " + string.Join(", ", path));
         this.PlayerMoveAnimation(path);
       }
       if (Input.GetKeyDown(KeyCode.DownArrow))
       {
+        if (!this.PlayerCanGo('d'))
+        {
+          Debug.Log("Error: can't go down");
+          return;
+        }
         path = player.Move('d', 0);
         Debug.Log("Path: " + string.Join(", ", path));
         this.PlayerMoveAnimation(path);
       }
       if (Input.GetKeyDown(KeyCode.LeftArrow))
       {
+        if (!this.PlayerCanGo('l'))
+        {
+          Debug.Log("Error: can't go left");
+          return;
+        }
         path = player.Move('l', 0);
         Debug.Log("Path: " + string.Join(", ", path));
         this.PlayerMoveAnimation(path);
       }
       if (Input.GetKeyDown(KeyCode.RightArrow))
       {
+        if (!this.PlayerCanGo('r'))
+        {
+          Debug.Log("Error: can't go right");
+          return;
+        }
         path = player.Move('r', 0);
         Debug.Log("Path: " + string.Join(", ", path));
         this.PlayerMoveAnimation(path);
@@ -68,7 +88,7 @@ public class State : MonoBehaviour
       GameObject marker = new GameObject("PathMarker");
       marker.transform.position = player.transform.position;
       var sr = marker.AddComponent<SpriteRenderer>();
-      sr.sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0,0,1,1), new Vector2(0.5f,0.5f));
+      sr.sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f));
       sr.color = Color.yellow; // 원하는 색상
       marker.transform.localScale = new Vector3(50f, 50f, 1); // 크기 조절
       switch (dir)
@@ -80,5 +100,40 @@ public class State : MonoBehaviour
       }
     }
     player.isMoving = false;
+  }
+
+  private bool PlayerCanGo(char dir)
+  {
+    var pos = player.GetPosition();
+    int px = pos.x, py = pos.y;
+
+    int currentTile = map.mapdata[py, px] % 1000;
+    Debug.Log($"Current Tile: {currentTile} at ({px}, {py})");
+
+    if (currentTile == MapLoader.TILE_EM) // 빈 타일
+    {
+      Debug.Log("Error: current tile is empty");
+      return false;
+    }
+    switch (dir)
+    {
+      case 'u':
+        if (currentTile % 2 == 0) return true; // 위로 갈 수 있는지 확인
+        break;
+      case 'd':
+        if (currentTile % 3 == 0) return true; // 아래로 갈 수 있는지 확인
+        break;
+      case 'l':
+        if (currentTile % 5 == 0) return true; // 왼쪽으로 갈 수 있는지 확인
+        break;
+      case 'r':
+        if (currentTile % 7 == 0) return true; // 오른쪽으로 갈 수 있는지 확인
+        break;
+      default:
+        Debug.Log("Error: invalid direction in PlayerCanGo");
+        return false; // 잘못된 방향
+    }
+
+    return false; // 해당 방향으로 갈 수 없음
   }
 }

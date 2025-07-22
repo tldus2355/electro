@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     {
       for (int j = 0; j < this.mapx; j++)
       {
-        if (map.mapdata[i, j] == MapLoader.TILE_ST)
+        if (map.gadgetmap[i, j] == MapLoader.TILE_ST)
         {
           this.y = i;
           this.x = j;
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
       Debug.Log("from Player.cs");
     }
 
-    this.setVoltage();
+    this.SetVoltage();
   }
 
   // Update is called once per frame
@@ -97,9 +97,15 @@ public class Player : MonoBehaviour
   private char NextDir(char dir)
   {
     int nextTile = this.map.mapdata[this.y, this.x];
-    if (nextTile == MapLoader.TILE_ED)
+    int nextgadget = this.map.gadgetmap[this.y, this.x];
+    if (nextgadget == MapLoader.TILE_ED)
     {
       Debug.Log("end tile reached");
+      return 's'; // stop
+    }
+    if (nextgadget != MapLoader.TILE_EM) // 길이 아니면 멈춤
+    {
+      Debug.Log("gadget tile reached: " + nextgadget);
       return 's'; // stop
     }
     if (nextTile / 10000 == 1) // 길 타일
@@ -140,8 +146,13 @@ public class Player : MonoBehaviour
     }
   }
 
-  private void setVoltage()
+  private void SetVoltage()
   {
     // TODO
+  }
+
+  public (int x, int y) GetPosition()
+  {
+    return (this.x, this.y);
   }
 }
