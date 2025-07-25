@@ -46,9 +46,6 @@ public class Player : MonoBehaviour
 
   }
 
-<<<<<<< Updated upstream
-=======
-
   public void MoveAnimation(List<char> path)
   {
     foreach (char dir in path)
@@ -76,7 +73,6 @@ public class Player : MonoBehaviour
     SimpleRoad currentTile = map.mapdata[this.y, this.x];
     return currentTile.canGo(dir);
   }
->>>>>>> Stashed changes
   public List<char> Move(char dir, int depth) //유효한 방향인지는 state.cs에서 체크
   {
     Debug.Log("Player.Move called with dir: " + dir + ", depth: " + depth);
