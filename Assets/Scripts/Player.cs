@@ -17,10 +17,13 @@ public class Player : MonoBehaviour
     this.mapy = map.mapdata.GetLength(0); //TODO: map 로드이후에 실행이 보장되게 해야 함
     this.mapx = map.mapdata.GetLength(1);
 
+    Debug.Log($"맵 불러오기 성공? (y, x): {mapy}, {mapx}");
+
     for (int i = 0; i < this.mapy; i++)
     {
       for (int j = 0; j < this.mapx; j++)
       {
+        if (map.mapdata[i, j] == null) continue;
         if (map.mapdata[i, j].isStart)
         {
           this.y = i;
@@ -43,6 +46,37 @@ public class Player : MonoBehaviour
 
   }
 
+<<<<<<< Updated upstream
+=======
+
+  public void MoveAnimation(List<char> path)
+  {
+    foreach (char dir in path)
+    {
+      // 경로에 기본 사각형 스프라이트 표시 TODO: 나중에 애니메이션으로 바꾸기
+      GameObject marker = new GameObject("PathMarker");
+      marker.transform.position = this.transform.position;
+      var sr = marker.AddComponent<SpriteRenderer>();
+      sr.sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f));
+      sr.color = Color.yellow; // 원하는 색상
+      marker.transform.localScale = new Vector3(50f, 50f, 1); // 크기 조절
+      switch (dir)
+      {
+        case 'u': this.transform.Translate(0, 1, 0); break;
+        case 'd': this.transform.Translate(0, -1, 0); break;
+        case 'l': this.transform.Translate(-1, 0, 0); break;
+        case 'r': this.transform.Translate(1, 0, 0); break;
+      }
+    }
+    // player.isMoving = false;
+  }
+  
+  public bool CanGo(char dir)
+  {
+    SimpleRoad currentTile = map.mapdata[this.y, this.x];
+    return currentTile.canGo(dir);
+  }
+>>>>>>> Stashed changes
   public List<char> Move(char dir, int depth) //유효한 방향인지는 state.cs에서 체크
   {
     Debug.Log("Player.Move called with dir: " + dir + ", depth: " + depth);
@@ -94,7 +128,7 @@ public class Player : MonoBehaviour
 
   private char NextDir(char dir)
   {
-    Tile nextTile = this.map.mapdata[this.y, this.x];
+    SimpleRoad nextTile = this.map.mapdata[this.y, this.x];
     // int nextgadget = this.map.gadgetmap[this.y, this.x];
     if (nextTile.isStop)
     {

@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class DiodeTile : Tile
+public class DiodeTile : SimpleRoad
 {
   public char diodeDirection;
   public DiodeTile(char[] directions, char diodeDirection)
   {
     // 생성자에서 방향과 전압을 초기화합니다.
-    this.direction = directions;
+    this.directions = directions;
     this.diodeDirection = diodeDirection; // 다이오드 방향을 설정합니다.
     this.isStart = false; // DiodeTile은 시작 타일이 아닙니다
     this.isStop = false;
@@ -31,7 +31,7 @@ public class DiodeTile : Tile
       return 's'; // 정지 타일에서 이동할 수 없음
     }
     // direction 배열에 두 개만 있다고 가정하고, dir의 반대 방향(u <-> d, l <-> r)과 다른 방향을 반환
-    foreach (char d in this.direction)
+    foreach (char d in this.directions)
     {
       if (d != this.OppositeDir(dir) && d == this.diodeDirection)
       {

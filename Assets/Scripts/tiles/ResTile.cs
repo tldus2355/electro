@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class ResTile : Tile
+public class ResTile : SimpleRoad
 {
   public int voltage; // 전압을 나타내는 변수
 
   public ResTile(char[] directions, int voltage, bool isStart = false, bool isStop = true)
   {
     // 생성자에서 방향과 시작 여부를 초기화합니다.
-    this.direction = directions;
+    this.directions = directions;
     this.isStart = isStart;
     this.isStop = isStop;
     this.voltage = voltage; // 전압을 설정합니다.

@@ -142,7 +142,7 @@ public class State : MonoBehaviour
   {
     var pos = player.GetPosition();
     int px = pos.x, py = pos.y;
-    Tile currentTile = map.mapdata[py, px];
+    SimpleRoad currentTile = map.mapdata[py, px];
 
     if(currentTile.hasInteraction)
     {

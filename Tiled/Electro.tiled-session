@@ -7,6 +7,17 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "D:/Unity/electro/Assets/Resources/ElectroTileSet.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/Unity/electro/Assets/Resources/Level1.tmx": {
+            "scale": 0.2006875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1801.3080037371537,
+                "y": 264.09218312052326
+            }
+        },
         "ElectroTileSet.tsx": {
             "dynamicWrapping": true,
             "scaleInDock": 1,
@@ -16,8 +27,13 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
+<<<<<<< Updated upstream
                 "x": 301,
                 "y": 264.33333333333326
+=======
+                "x": 424.3333333333333,
+                "y": 239.66666666666669
+>>>>>>> Stashed changes
             }
         }
     },
@@ -32,6 +48,7 @@
     "project": "Electro.tiled-project",
     "property.type": "int",
     "recentFiles": [
+        "D:/Unity/electro/Assets/Resources/Level1.tmx",
         "ElectroTileSet.tsx",
         "Level1.tmx"
     ],
