@@ -153,6 +153,16 @@ public class State : MonoBehaviour
         resTile.interaction(); // ResTile의 interaction 메서드 호출
         player.addVoltage(-1 * resTile.voltage); // 플레이어의 전압 감소
       }
+      else if (currentTile is FuseTile fuseTile)
+      {
+        fuseTile.interaction(); // FuseTile의 interaction 메서드 호출
+        if(this.player.voltage >= fuseTile.voltage)
+        {
+          Debug.Log("Error: Not enough voltage to interact with FuseTile");
+          //this.gameover();
+          return; // 전압이 부족하면 상호작용하지 않음
+        }
+      }
       else
       {
         Debug.Log("No interaction defined for this tile type.");
