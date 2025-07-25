@@ -58,6 +58,8 @@ public class MapLoader : MonoBehaviour
 
   public static readonly Tile TILE_RES_LR = new ResTile(new char[] { 'l', 'r' }, voltage: 10); // 왼쪽 오른쪽 연결, 전압 10
 
+  public static readonly Tile TILE_DIEOD_LR_R = new DiodeTile(new char[] { 'l', 'r' }, diodeDirection: 'r'); // 왼쪽 오른쪽 연결, 전압 5
+
 
 
   // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -96,7 +98,7 @@ public class MapLoader : MonoBehaviour
     this.mapdata = new Tile[,] {
       {TILE_EM, TILE_DR, TILE_LR, TILE_LR, TILE_DL, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
       {TILE_EM, TILE_UD, TILE_EM, TILE_EM, TILE_UD, TILE_EM, TILE_EM, TILE_ED_D, TILE_EM, TILE_EM},
-      {TILE_ST, TILE_UL, TILE_EM, TILE_DR, TILE_CROS, TILE_LR, TILE_LR, TILE_ULR, TILE_RES_LR, TILE_ED_L},
+      {TILE_ST, TILE_UL, TILE_EM, TILE_DR, TILE_CROS, TILE_DIEOD_LR_R, TILE_LR, TILE_ULR, TILE_RES_LR, TILE_ED_L},
       {TILE_EM, TILE_EM, TILE_EM, TILE_UR, TILE_UDL, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
       {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_ED_U, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM}
     };
