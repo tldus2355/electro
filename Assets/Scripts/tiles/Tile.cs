@@ -5,6 +5,7 @@ public abstract class Tile : MonoBehaviour
   public char[] direction; // 타일의 방향을 나타내는 문자 ('u', 'd', 'l', 'r' 등)
   public bool isStop = true; // 타일이 정지 타일인지 여부
   public bool isStart = false; // 시작 타일인지 여부
+  public bool hasInteraction = false; // 상호작용 여부
 
   public virtual bool canGo(char dir)
   {

@@ -144,6 +144,26 @@ public class State : MonoBehaviour
     int px = pos.x, py = pos.y;
     Tile currentTile = map.mapdata[py, px];
 
+    if(currentTile.hasInteraction)
+    {
+      // 타일과 상호작용하는 로직을 여기에 작성합니다.
+      Debug.Log("Interacting with tile at (" + px + ", " + py + ")");
+      if (currentTile is ResTile resTile)
+      {
+        resTile.interaction(); // ResTile의 interaction 메서드 호출
+        player.addVoltage(-1 * resTile.voltage); // 플레이어의 전압 감소
+      }
+      else
+      {
+        Debug.Log("No interaction defined for this tile type.");
+      }
+    }
+    else
+    {
+      Debug.Log("No interaction available on this tile.");
+    }
+
+
     return;
   }
 }

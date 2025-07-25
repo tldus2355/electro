@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -148,5 +146,11 @@ public class Player : MonoBehaviour
   public (int x, int y) GetPosition()
   {
     return (this.x, this.y);
+  }
+
+  public void addVoltage(int v)
+  {
+    this.voltage += v;
+    Debug.Log("Player voltage: " + this.voltage);
   }
 }

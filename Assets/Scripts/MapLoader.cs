@@ -39,7 +39,7 @@ public class MapLoader : MonoBehaviour
   public static readonly Tile TILE_R = new SimpleLoad(new char[] { 'r' });
   public static readonly Tile TILE_UD = new SimpleLoad(new char[] { 'u', 'd' }, isStop: false);
   public static readonly Tile TILE_UL = new SimpleLoad(new char[] { 'u', 'l' }, isStop: false);
-  public static readonly Tile TILE_UR = new SimpleLoad(new char[] { 'u', 'r' }, isStop: false); 
+  public static readonly Tile TILE_UR = new SimpleLoad(new char[] { 'u', 'r' }, isStop: false);
   public static readonly Tile TILE_DL = new SimpleLoad(new char[] { 'd', 'l' }, isStop: false);
   public static readonly Tile TILE_DR = new SimpleLoad(new char[] { 'd', 'r' }, isStop: false);
   public static readonly Tile TILE_LR = new SimpleLoad(new char[] { 'l', 'r' }, isStop: false);
@@ -56,6 +56,8 @@ public class MapLoader : MonoBehaviour
   public static readonly Tile TILE_ED_D = new SimpleLoad(new char[] { 'd' }, isStop: true); // 끝 타일, 테스트용
   public static readonly Tile TILE_ED_U = new SimpleLoad(new char[] { 'u' }, isStop: true); // 끝 타일, 테스트용
 
+  public static readonly Tile TILE_RES_LR = new ResTile(new char[] { 'l', 'r' }, voltage: 10); // 왼쪽 오른쪽 연결, 전압 10
+
 
 
   // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -63,6 +65,7 @@ public class MapLoader : MonoBehaviour
   {
     // LoadMap(); // 실제 맵 로딩
     TestLoadMap();
+    // createMapObjects(); // 맵 오브젝트 생성
   }
 
   // Update is called once per frame
@@ -75,9 +78,16 @@ public class MapLoader : MonoBehaviour
   }
 
 
-  private void LoadMap()
+  private void LoadMapData()
   {
     // 스테이지 씬 시작될 때 MapLoader 오브젝트(= 이 코드 mapdata)에 tiled 저장하기 
+    foreach (var tile in mapdata)
+    {
+      foreach (var direction in tile.direction)
+      {
+        Debug.Log($"Tile: {tile.name}, Direction: {direction}");
+      }
+    }
   }
 
   private void TestLoadMap()
@@ -86,11 +96,11 @@ public class MapLoader : MonoBehaviour
     this.mapdata = new Tile[,] {
       {TILE_EM, TILE_DR, TILE_LR, TILE_LR, TILE_DL, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
       {TILE_EM, TILE_UD, TILE_EM, TILE_EM, TILE_UD, TILE_EM, TILE_EM, TILE_ED_D, TILE_EM, TILE_EM},
-      {TILE_ST, TILE_UL, TILE_EM, TILE_DR, TILE_CROS, TILE_LR, TILE_LR, TILE_ULR, TILE_LR, TILE_ED_L},
+      {TILE_ST, TILE_UL, TILE_EM, TILE_DR, TILE_CROS, TILE_LR, TILE_LR, TILE_ULR, TILE_RES_LR, TILE_ED_L},
       {TILE_EM, TILE_EM, TILE_EM, TILE_UR, TILE_UDL, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
       {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_ED_U, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM}
     };
-    
+
     // // 테스트용으로 mapdata를 하드코딩
     // this.gadgetmap = new int[,] {
     //   {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
@@ -99,5 +109,23 @@ public class MapLoader : MonoBehaviour
     //   {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM},
     //   {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_ED, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM}
     // };
+  }
+  
+  private void createMapObjects()
+  {
+    // // 맵 오브젝트 생성
+    // for (int i = 0; i < mapdata.GetLength(0); i++)
+    // {
+    //   for (int j = 0; j < mapdata.GetLength(1); j++)
+    //   {
+    //     Tile tile = mapdata[i, j];
+    //     if (tile != null)
+    //     {
+    //       GameObject tileObject = Instantiate(tile.gameObject, new Vector3(j, -i, 0), Quaternion.identity);
+    //       tileObject.name = $"Tile_{i}_{j}";
+    //       tileObject.transform.SetParent(this.transform);
+    //     }
+    //   }
+    // }
   }
 }

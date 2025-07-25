@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // State로 진입하기 이전부터 전체 관라?
 public class Game_manager : MonoBehaviour
