@@ -41,8 +41,6 @@ public class State : MonoBehaviour
           return;
         }
         path = player.Move('u', 0);
-        Debug.Log("Path: " + string.Join(", ", path));
-        this.PlayerMoveAnimation(path);
       }
       if (Input.GetKeyDown(KeyCode.DownArrow))
       {
@@ -52,8 +50,6 @@ public class State : MonoBehaviour
           return;
         }
         path = player.Move('d', 0);
-        Debug.Log("Path: " + string.Join(", ", path));
-        this.PlayerMoveAnimation(path);
       }
       if (Input.GetKeyDown(KeyCode.LeftArrow))
       {
@@ -63,8 +59,6 @@ public class State : MonoBehaviour
           return;
         }
         path = player.Move('l', 0);
-        Debug.Log("Path: " + string.Join(", ", path));
-        this.PlayerMoveAnimation(path);
       }
       if (Input.GetKeyDown(KeyCode.RightArrow))
       {
@@ -74,8 +68,13 @@ public class State : MonoBehaviour
           return;
         }
         path = player.Move('r', 0);
+      }
+      if (this.player.isMoving)
+      {
         Debug.Log("Path: " + string.Join(", ", path));
         this.PlayerMoveAnimation(path);
+        this.CheckObject(); // 플레이어가 이동한 후에 오브젝트 체크
+        this.player.isMoving = false; // 애니메이션이 끝나면 다시 false로 설정
       }
     }
   }
@@ -99,7 +98,7 @@ public class State : MonoBehaviour
         case 'r': player.transform.Translate(1, 0, 0); break;
       }
     }
-    player.isMoving = false;
+    // player.isMoving = false;
   }
 
   private bool PlayerCanGo(char dir)
@@ -137,5 +136,14 @@ public class State : MonoBehaviour
     // }
 
     // return false; // 해당 방향으로 갈 수 없음
+  }
+
+  private void CheckObject()
+  {
+    var pos = player.GetPosition();
+    int px = pos.x, py = pos.y;
+    Tile currentTile = map.mapdata[py, px];
+
+    return;
   }
 }
