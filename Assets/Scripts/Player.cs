@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-  private int voltage = 0;
+  public int voltage = 0;
   public MapLoader map;
   public bool isMoving = false; // 플레이어가 움직이는 중인지 여부
   private int x = -1;
