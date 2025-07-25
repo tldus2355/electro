@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     {
       for (int j = 0; j < this.mapx; j++)
       {
-        if (map.gadgetmap[i, j] == MapLoader.TILE_ST)
+        if (map.mapdata[i, j].isStart)
         {
           this.y = i;
           this.x = j;
@@ -96,54 +96,48 @@ public class Player : MonoBehaviour
 
   private char NextDir(char dir)
   {
-    int nextTile = this.map.mapdata[this.y, this.x];
-    int nextgadget = this.map.gadgetmap[this.y, this.x];
-    if (nextgadget == MapLoader.TILE_ED)
+    Tile nextTile = this.map.mapdata[this.y, this.x];
+    // int nextgadget = this.map.gadgetmap[this.y, this.x];
+    if (nextTile.isStop)
     {
-      Debug.Log("end tile reached");
+      Debug.Log("Error: next tile is stop tile");
       return 's'; // stop
     }
-    if (nextgadget != MapLoader.TILE_EM) // 길이 아니면 멈춤
-    {
-      Debug.Log("gadget tile reached: " + nextgadget);
-      return 's'; // stop
-    }
-    if (nextTile / 10000 == 1) // 길 타일
-    {
-      nextTile -= 10000;
-      if (nextTile / 1000 != 2)
-      {
-        Debug.Log(nextTile + " ******************* ");
-        Debug.Log("Not two-way tile, returning stop");
-        return 's'; // stop
-      }
-      else
-      {
-        nextTile -= 2000;
-        if (nextTile == 210) // 교차 타일
-        {
-          return dir;
-        }
-        switch (dir)
-        {
-          case 'u':
-            return this.map.TILE_DIRECTIONS[nextTile / 3]; // 아래로 연결된 타일
-          case 'd':
-            return this.map.TILE_DIRECTIONS[nextTile / 2]; // 위로 연결된 타일
-          case 'l':
-            return this.map.TILE_DIRECTIONS[nextTile / 7]; // 오른쪽으로 연결된 타일
-          case 'r':
-            return this.map.TILE_DIRECTIONS[nextTile / 5]; // 왼쪽으로 연결된 타일
-          default:
-            Debug.Log("Error: invalid direction in Player.NextDir");
-            return 's'; // stop
-        }
-      }
-    }
-    else
-    {
-      return 's'; // stop
-    }
+    return nextTile.NextDir(dir);
+    // if (nextgadget != MapLoader.TILE_EM) // 길이 아니면 멈춤
+    // {
+    //   Debug.Log("gadget tile reached: " + nextgadget);
+    //   return 's'; // stop
+    // }
+    // nextTile -= 10000;
+    // if (nextTile / 1000 != 2)
+    // {
+    //   Debug.Log("stoped Non two-way tile");
+    //   return 's'; // stop
+    // }
+    // else
+    // {
+    //   nextTile -= 2000;
+    // if (nextTile == 210) // 교차 타일
+    // {
+    //   return dir;
+    // }
+
+    // switch (dir)
+    // {
+    //   case 'u':
+    //     return this.map.TILE_DIRECTIONS[nextTile / 3]; // 아래로 연결된 타일
+    //   case 'd':
+    //     return this.map.TILE_DIRECTIONS[nextTile / 2]; // 위로 연결된 타일
+    //   case 'l':
+    //     return this.map.TILE_DIRECTIONS[nextTile / 7]; // 오른쪽으로 연결된 타일
+    //   case 'r':
+    //     return this.map.TILE_DIRECTIONS[nextTile / 5]; // 왼쪽으로 연결된 타일
+    //   default:
+    //     Debug.Log("Error: invalid direction in Player.NextDir");
+    //     return 's'; // stop
+    // }
+    // }
   }
 
   private void SetVoltage()

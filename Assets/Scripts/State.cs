@@ -107,33 +107,35 @@ public class State : MonoBehaviour
     var pos = player.GetPosition();
     int px = pos.x, py = pos.y;
 
-    int currentTile = map.mapdata[py, px] % 1000;
-    Debug.Log($"Current Tile: {currentTile} at ({px}, {py})");
+    Tile currentTile = map.mapdata[py, px];
 
-    if (currentTile == MapLoader.TILE_EM) // 빈 타일
-    {
-      Debug.Log("Error: current tile is empty");
-      return false;
-    }
-    switch (dir)
-    {
-      case 'u':
-        if (currentTile % 2 == 0) return true; // 위로 갈 수 있는지 확인
-        break;
-      case 'd':
-        if (currentTile % 3 == 0) return true; // 아래로 갈 수 있는지 확인
-        break;
-      case 'l':
-        if (currentTile % 5 == 0) return true; // 왼쪽으로 갈 수 있는지 확인
-        break;
-      case 'r':
-        if (currentTile % 7 == 0) return true; // 오른쪽으로 갈 수 있는지 확인
-        break;
-      default:
-        Debug.Log("Error: invalid direction in PlayerCanGo");
-        return false; // 잘못된 방향
-    }
+    return currentTile.canGo(dir);
+    // Debug.Log($"Current Tile: {currentTile} at ({px}, {py})");
 
-    return false; // 해당 방향으로 갈 수 없음
+    // if (currentTile == MapLoader.TILE_EM) // 빈 타일
+    // {
+    //   Debug.Log("Error: current tile is empty");
+    //   return false;
+    // }
+    // switch (dir)
+    // {
+    //   case 'u':
+    //     if (currentTile % 2 == 0) return true; // 위로 갈 수 있는지 확인
+    //     break;
+    //   case 'd':
+    //     if (currentTile % 3 == 0) return true; // 아래로 갈 수 있는지 확인
+    //     break;
+    //   case 'l':
+    //     if (currentTile % 5 == 0) return true; // 왼쪽으로 갈 수 있는지 확인
+    //     break;
+    //   case 'r':
+    //     if (currentTile % 7 == 0) return true; // 오른쪽으로 갈 수 있는지 확인
+    //     break;
+    //   default:
+    //     Debug.Log("Error: invalid direction in PlayerCanGo");
+    //     return false; // 잘못된 방향
+    // }
+
+    // return false; // 해당 방향으로 갈 수 없음
   }
 }
