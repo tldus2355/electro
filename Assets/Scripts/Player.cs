@@ -43,6 +43,34 @@ public class Player : MonoBehaviour
 
   }
 
+
+  public void MoveAnimation(List<char> path)
+  {
+    foreach (char dir in path)
+    {
+      // 경로에 기본 사각형 스프라이트 표시 TODO: 나중에 애니메이션으로 바꾸기
+      GameObject marker = new GameObject("PathMarker");
+      marker.transform.position = this.transform.position;
+      var sr = marker.AddComponent<SpriteRenderer>();
+      sr.sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f));
+      sr.color = Color.yellow; // 원하는 색상
+      marker.transform.localScale = new Vector3(50f, 50f, 1); // 크기 조절
+      switch (dir)
+      {
+        case 'u': this.transform.Translate(0, 1, 0); break;
+        case 'd': this.transform.Translate(0, -1, 0); break;
+        case 'l': this.transform.Translate(-1, 0, 0); break;
+        case 'r': this.transform.Translate(1, 0, 0); break;
+      }
+    }
+    // player.isMoving = false;
+  }
+  
+  public bool CanGo(char dir)
+  {
+    Tile currentTile = map.mapdata[this.x, this.y];
+    return currentTile.canGo(dir);
+  }
   public List<char> Move(char dir, int depth) //유효한 방향인지는 state.cs에서 체크
   {
     Debug.Log("Player.Move called with dir: " + dir + ", depth: " + depth);
