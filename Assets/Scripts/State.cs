@@ -86,7 +86,7 @@ public class State : MonoBehaviour
     int px = pos.x, py = pos.y;
     SimpleRoad currentTile = map.mapdata[py, px];
 
-    if(currentTile.hasInteraction)
+    if (currentTile.hasInteraction)
     {
       // 타일과 상호작용하는 로직을 여기에 작성합니다.
       Debug.Log("Interacting with tile at (" + px + ", " + py + ")");
@@ -98,11 +98,35 @@ public class State : MonoBehaviour
       else if (currentTile is FuseTile fuseTile)
       {
         fuseTile.interaction(); // FuseTile의 interaction 메서드 호출
-        if(this.player.voltage >= fuseTile.voltage)
+        if (this.player.voltage >= fuseTile.voltage)
         {
           Debug.Log("Error: Not enough voltage to interact with FuseTile");
-          //this.gameover();
+          this.gameover();
+          return;
+        }
+      }
+      else if (currentTile is EnemyTile enemyTile)
+      {
+        enemyTile.interaction(); // EnemyTile의 interaction 메서드 호출
+        if (this.player.voltage >= enemyTile.voltage)
+        {
+          // 현재 타일을 SimpleRoad로 바꾸기
+          EnemyTile.enemyCount--;
+          if (EnemyTile.enemyCount <= 0)
+          {
+            Debug.Log("All enemies defeated!");
+            // 게임 승리 로직을 여기에 작성합니다.
+          }
+          else
+          {
+            Debug.Log("Enemy defeated, remaining: " + EnemyTile.enemyCount);
+          }
           return; // 전압이 부족하면 상호작용하지 않음
+        }
+        else
+        {
+          this.gameover();
+          return; // 전압이 부족하면 게임 오버
         }
       }
       else
@@ -117,5 +141,12 @@ public class State : MonoBehaviour
 
 
     return;
+  }
+  
+  public void gameover()
+  {
+    Debug.Log("Game Over");
+    // 게임 오버 로직을 여기에 작성합니다.
+    // 예: UI 표시, 재시작 버튼 활성화 등
   }
 }
