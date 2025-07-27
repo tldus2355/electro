@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public class ResTile : SimpleRoad, IHasInteraction, IHasVoltage
+public class IndTile : SimpleRoad, IHasInteraction, IHasVoltage
 {
   public int voltage; // 전압을 나타내는 변수
 
@@ -13,10 +14,9 @@ public class ResTile : SimpleRoad, IHasInteraction, IHasVoltage
     this.hasInteraction = true; // ResTile은 상호작용이 가능합니다.
   }
 
-  public void SetVoltage(int voltage)
+  public void SetVoltage(int voltage = 0)
   {
     this.voltage = voltage; // 전압을 설정하는 메서드
-    // Debug.Log("ResTile voltage set to: " + voltage);
   }
 
   void Start()
@@ -27,7 +27,6 @@ public class ResTile : SimpleRoad, IHasInteraction, IHasVoltage
   public void interaction()
   {
     // 타일과 상호작용하는 로직을 여기에 작성합니다.
-    Debug.Log("Interacting with ResTile with voltage: " + voltage);
-
+    
   }
 }

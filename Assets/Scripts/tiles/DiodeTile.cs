@@ -3,13 +3,20 @@ using UnityEngine;
 public class DiodeTile : SimpleRoad
 {
   public char diodeDirection;
-  public DiodeTile(char[] directions, char diodeDirection)
+  public override void Init(char[] directions, bool isStart = false, bool hasInteraction = false)
   {
-    // 생성자에서 방향과 전압을 초기화합니다.
+    // 생성자에서 방향과 다이오드 방향을 초기화합니다.
     this.directions = directions;
-    this.diodeDirection = diodeDirection; // 다이오드 방향을 설정합니다.
-    this.isStart = false; // DiodeTile은 시작 타일이 아닙니다
-    this.isStop = false;
+    this.isStart = isStart; // DiodeTile은 시작 타일 여부를 설정합니다.
+    this.isStop = true; // DiodeTile은 정지 타일입니다.
+    this.hasInteraction = false; // DiodeTile은 상호작용이 없습니다.
+    // this.diodeDirection = directions[0]; // 첫 번째 방향을 다이오드 방향으로 설정
+  }
+
+  public void SetDiodeDirection(char direction)
+  {
+    this.diodeDirection = direction; // 다이오드 방향을 설정하는 메서드
+    // Debug.Log("DiodeTile diodeDirection set to: " + direction);
   }
 
   void Start()
@@ -22,7 +29,7 @@ public class DiodeTile : SimpleRoad
     return dir == this.diodeDirection;
   }
 
-  public override char NextDir(char dir)
+  public override char NextDir(char dir, int v = 0)
   {
     Debug.Log("DIODE*****************************************");
     if (this.isStop)

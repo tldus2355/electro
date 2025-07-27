@@ -20,7 +20,7 @@ public class SimpleRoad : MonoBehaviour
     return System.Array.Exists(this.directions, d => d == dir);
   }
 
-  public virtual char NextDir(char dir)
+  public virtual char NextDir(char dir, int v = 0)
   {
     if (this.isStop)
     {

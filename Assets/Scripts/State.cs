@@ -71,6 +71,12 @@ public class State : MonoBehaviour
       }
       if (this.player.isMoving)
       {
+        if(path[path.Count - 1] == 'f')
+        {
+          Debug.Log("Fuse Over in State.cs");
+          this.gameover();
+          return;
+        }
         Debug.Log("Path: " + string.Join(", ", path));
         this.player.MoveAnimation(path);
         this.CheckObject(); // 플레이어가 이동한 후에 오브젝트 체크
@@ -86,24 +92,88 @@ public class State : MonoBehaviour
     int px = pos.x, py = pos.y;
     SimpleRoad currentTile = map.mapdata[py, px];
 
-    if(currentTile.hasInteraction)
+    if (currentTile.hasInteraction)
     {
-      // 타일과 상호작용하는 로직을 여기에 작성합니다.
       Debug.Log("Interacting with tile at (" + px + ", " + py + ")");
+      // Res ********
       if (currentTile is ResTile resTile)
       {
         resTile.interaction(); // ResTile의 interaction 메서드 호출
         player.addVoltage(-1 * resTile.voltage); // 플레이어의 전압 감소
       }
-      else if (currentTile is FuseTile fuseTile)
+      // Fuse ********
+      // else if (currentTile is FuseTile fuseTile)
+      // {
+      //   fuseTile.interaction(); // FuseTile의 interaction 메서드 호출
+      //   if (this.player.voltage >= fuseTile.voltage)
+      //   {
+      //     Debug.Log("Error: Not enough voltage to interact with FuseTile");
+      //     this.gameover();
+      //     return;
+      //   }
+      // }
+      // Enemy ********
+      else if (currentTile is EnemyTile enemyTile)
       {
-        fuseTile.interaction(); // FuseTile의 interaction 메서드 호출
-        if(this.player.voltage >= fuseTile.voltage)
+        enemyTile.interaction(); // EnemyTile의 interaction 메서드 호출
+        if (this.player.voltage >= enemyTile.voltage)
         {
-          Debug.Log("Error: Not enough voltage to interact with FuseTile");
-          //this.gameover();
+          // 현재 타일을 SimpleRoad로 바꾸기
+          EnemyTile.enemyCount--;
+          if (EnemyTile.enemyCount <= 0)
+          {
+            Debug.Log("All enemies defeated!");
+            // 게임 승리 로직을 여기에 작성합니다.
+          }
+          else
+          {
+            Debug.Log("Enemy defeated, remaining: " + EnemyTile.enemyCount);
+          }
           return; // 전압이 부족하면 상호작용하지 않음
         }
+        else
+        {
+          this.gameover();
+          return; // 전압이 부족하면 게임 오버
+        }
+      }
+      // Vdd ********
+      else if (currentTile is VddTile vddTile)
+      {
+        if (!vddTile.isUsed) // VddTile의 interaction 메서드 호출
+        {
+          player.addVoltage(vddTile.voltage); // 플레이어의 전압 증가
+          vddTile.interaction(); // VddTile의 interaction 메서드 호출
+        }
+      }
+      // Cap ********
+      else if (currentTile is CapTile capTile)
+      {
+        if (!capTile.isUsed && capTile.voltage == 0)
+        {
+          capTile.SetVoltage(player.voltage); // 플레이어의 전압을 CapTile에 설정
+          player.SetVoltage(0); // 플레이어의 전압을 0으로 설정
+        }
+        else if (!capTile.isUsed)
+        {
+          player.addVoltage(capTile.voltage); // 플레이어의 전압 증가
+        }
+        else
+        {
+          Debug.Log("CapTile has already been used.");
+        }
+        capTile.interaction(); // CapTile의 interaction 메서드 호출
+      }
+      // Inductor ********
+      else if (currentTile is IndTile indTile)
+      {
+        if (player.voltage > indTile.voltage)
+        {
+          player.SetVoltage(indTile.voltage); // 플레이어의 전압을 IndTile의 전압으로 설정
+          Debug.Log("Player voltage set to IndTile voltage: " + indTile.voltage);
+          return; // 전압이 IndTile보다 크면 게임 오버
+        }
+        indTile.interaction(); // IndTile의 interaction 메서드 호출
       }
       else
       {
@@ -117,5 +187,12 @@ public class State : MonoBehaviour
 
 
     return;
+  }
+  
+  public void gameover()
+  {
+    Debug.Log("Game Over");
+    // 게임 오버 로직을 여기에 작성합니다.
+    // 예: UI 표시, 재시작 버튼 활성화 등
   }
 }
