@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FuseTile : SimpleRoad, IHasInteraction, IHasVoltage
+public class FuseTile : SimpleRoad, IHasVoltage
 {
   public int voltage; // 전압을 나타내는 변수
 
@@ -10,7 +10,7 @@ public class FuseTile : SimpleRoad, IHasInteraction, IHasVoltage
     this.directions = directions;
     this.isStart = false; // FuseTile은 시작 타일이 아닙니다
     this.isStop = true; // FuseTile은 정지 타일입니다.
-    this.hasInteraction = true; // FuseTile은 상호작용이 가능합니다.
+    this.hasInteraction = false; // FuseTile은 상호작용이 가능합니다.
   }
 
   public void SetVoltage(int voltage)
@@ -24,9 +24,16 @@ public class FuseTile : SimpleRoad, IHasInteraction, IHasVoltage
 
   }
   
-  public void interaction()
+  public override char NextDir(char dir, int v = 0)
   {
-    // 타일과 상호작용하는 로직을 여기에 작성합니다.
-    Debug.Log("Interacting with FuseTile with voltage: " + voltage);
+    // FuseTile은 전압이 0일 때만 작동합니다.
+    if (v <= this.voltage)
+    {
+      return base.NextDir(dir, v); // 기본 동작을 수행합니다.
+    }
+    else
+    {
+      return 'f';
+    }
   }
 }

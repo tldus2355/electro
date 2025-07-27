@@ -29,7 +29,7 @@ public class DiodeTile : SimpleRoad
     return dir == this.diodeDirection;
   }
 
-  public override char NextDir(char dir)
+  public override char NextDir(char dir, int v = 0)
   {
     Debug.Log("DIODE*****************************************");
     if (this.isStop)

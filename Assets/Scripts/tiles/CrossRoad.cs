@@ -22,7 +22,7 @@ public class CrossRoad : SimpleRoad
     return false; // 호출되면 안됨
   }
 
-  public override char NextDir(char dir)
+  public override char NextDir(char dir, int v = 0)
   {
     // cross의 경우에는 방향을 바꾸지 않음
     return dir;
