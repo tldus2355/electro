@@ -1,8 +1,4 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
     "activeFile": "Level1.tmx",
     "expandedProjectPaths": [
     ],
@@ -24,34 +20,23 @@
             "scaleInEditor": 1
         },
         "Level1.tmx": {
-            "scale": 1.5,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-<<<<<<< Updated upstream
-                "x": 301,
-                "y": 264.33333333333326
-=======
-                "x": 424.3333333333333,
-                "y": 239.66666666666669
->>>>>>> Stashed changes
+                "x": 974,
+                "y": 310
             }
         }
     },
     "last.imagePath": "D:/Unity/electro/Tiled/TiledsetImg",
-    "map.height": 15,
-    "map.lastUsedFormat": "tmx",
-    "map.width": 25,
     "openFiles": [
-        "ElectroTileSet.tsx",
-        "Level1.tmx"
+        "Level1.tmx",
+        "ElectroTileSet.tsx"
     ],
-    "project": "Electro.tiled-project",
-    "property.type": "int",
+    "project": "",
     "recentFiles": [
-        "D:/Unity/electro/Assets/Resources/Level1.tmx",
         "ElectroTileSet.tsx",
-        "Level1.tmx"
-    ],
-    "tileset.lastUsedFormat": "tsx",
-    "tileset.type": 1
+        "Level1.tmx",
+        "D:/Unity/electro/Assets/Resources/Level1.tmx"
+    ]
 }
