@@ -90,6 +90,13 @@ public class Player : MonoBehaviour
       return path; // stop
     }
 
+    if (dir == 'f')
+    {
+      Debug.Log("fuse over");
+      path.Add('f'); // stop
+      return path;
+    }
+
     // 다음 타일로 이동
     switch (dir)
     {
@@ -131,46 +138,13 @@ public class Player : MonoBehaviour
       Debug.Log("Error: next tile is stop tile");
       return 's'; // stop
     }
-    return nextTile.NextDir(dir);
-    // if (nextgadget != MapLoader.TILE_EM) // 길이 아니면 멈춤
-    // {
-    //   Debug.Log("gadget tile reached: " + nextgadget);
-    //   return 's'; // stop
-    // }
-    // nextTile -= 10000;
-    // if (nextTile / 1000 != 2)
-    // {
-    //   Debug.Log("stoped Non two-way tile");
-    //   return 's'; // stop
-    // }
-    // else
-    // {
-    //   nextTile -= 2000;
-    // if (nextTile == 210) // 교차 타일
-    // {
-    //   return dir;
-    // }
-
-    // switch (dir)
-    // {
-    //   case 'u':
-    //     return this.map.TILE_DIRECTIONS[nextTile / 3]; // 아래로 연결된 타일
-    //   case 'd':
-    //     return this.map.TILE_DIRECTIONS[nextTile / 2]; // 위로 연결된 타일
-    //   case 'l':
-    //     return this.map.TILE_DIRECTIONS[nextTile / 7]; // 오른쪽으로 연결된 타일
-    //   case 'r':
-    //     return this.map.TILE_DIRECTIONS[nextTile / 5]; // 왼쪽으로 연결된 타일
-    //   default:
-    //     Debug.Log("Error: invalid direction in Player.NextDir");
-    //     return 's'; // stop
-    // }
-    // }
+    return nextTile.NextDir(dir, this.voltage);
   }
 
-  private void SetVoltage()
+  public void SetVoltage(int voltage = 0)
   {
-    // TODO
+    this.voltage = voltage; // 플레이어의 전압을 설정
+    Debug.Log("Player voltage set to: " + this.voltage);
   }
 
   public (int x, int y) GetPosition()
