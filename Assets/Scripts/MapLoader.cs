@@ -126,9 +126,10 @@ public class MapLoader : MonoBehaviour
       float y = float.Parse(obj.Attributes["y"].Value);
 
       int tileX = Mathf.FloorToInt(x / 32f);
-      int tileY = Mathf.FloorToInt(y / 32f)-1;
+      int tileY = Mathf.FloorToInt(y / 32f) - 1;
 
       Debug.Log($"GID: {gid}, 위치: ({tileY}, {tileX})");
+      int voltage = 0;
 
       // properties가 있다면 추가 속성 가져오기
       XmlNode propertiesNode = obj.SelectSingleNode("properties");
@@ -139,15 +140,97 @@ public class MapLoader : MonoBehaviour
           string propName = prop.Attributes["name"].Value;
           string propValue = prop.Attributes["value"].Value;
           Debug.Log($"  - {propName}: {propValue}");
+
+          if (propName == "voltage")
+          {
+            // 전압 정보가 있다면 int로 변환
+            if (int.TryParse(propValue, out voltage))
+            {
+              Debug.Log($"전압 정보: {voltage}");
+            }
+            else
+            {
+              Debug.LogWarning($"전압 정보 변환 실패: {propValue}");
+            }
+          }
         }
       }
 
+      // 8: player
+      // 9 : enemy
+      // 17 : vdd
+      // 18 : res
+      // 19 : cap
+      // 20 : diode
+      // 21 : fuse
+      // 22 : ind
+      // 23 : semi
+
+      SimpleRoad Tile = null;
+
       if (gid == 8)
       {
-        SimpleRoad Tile = Instantiate(SimpleRoadPrefab).GetComponent<SimpleRoad>();
-        Tile.Init(mapdata[tileY, tileX].directions, true);
-        mapdata[tileY, tileX] = Tile;
+        Tile = Instantiate(SimpleRoadPrefab).GetComponent<SimpleRoad>();
+        Tile.Init(mapdata[tileY, tileX].directions, isStart: true);
       }
+      else if (gid == 9)
+      {
+        Tile = Instantiate(Resources.Load<GameObject>("EnemyTile")).GetComponent<EnemyTile>();
+        Tile.Init(mapdata[tileY, tileX].directions, hasInteraction: true);
+      }
+      else if (gid == 17)
+      {
+        Tile = Instantiate(Resources.Load<GameObject>("VddTile")).GetComponent<VddTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 18)
+      {
+        Tile = Instantiate(Resources.Load<GameObject>("ResistorTile")).GetComponent<ResTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 19)
+      {
+        Tile = Instantiate(Resources.Load<GameObject>("CapacitorTile")).GetComponent<CapTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 20)
+      {
+        Tile = Instantiate(Resources.Load<GameObject>("DiodeTile")).GetComponent<DiodeTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 21)
+      {
+        Tile = Instantiate(Resources.Load<GameObject>("FuseTile")).GetComponent<FuseTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 22)
+      {
+        Tile = Instantiate(Resources.Load<GameObject>("InductorTile")).GetComponent<IndTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 23)
+      {
+        Tile = Instantiate(Resources.Load<GameObject>("SemiTile")).GetComponent<SemiTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+
+      if (Tile is IHasVoltage voltageTile)
+      {
+        // properties가 있다면 전압 정보 설정
+        if (propertiesNode != null)
+        {
+          voltageTile.SetVoltage(voltage);
+        }
+        else
+        {
+          // 전압 정보가 없으면 기본값 설정
+          voltageTile.SetVoltage(0);
+        }
+      }
+
+
+      mapdata[tileY, tileX] = Tile;
+      
     }
         
       

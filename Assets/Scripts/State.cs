@@ -118,7 +118,7 @@ public class State : MonoBehaviour
         enemyTile.interaction(); // EnemyTile의 interaction 메서드 호출
         if (this.player.voltage >= enemyTile.voltage)
         {
-          // 현재 타일을 SimpleRoad로 바꾸기
+          // TODO: 현재 타일을 SimpleRoad로 바꾸기
           EnemyTile.enemyCount--;
           if (EnemyTile.enemyCount <= 0)
           {
