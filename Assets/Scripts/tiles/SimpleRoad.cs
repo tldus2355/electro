@@ -17,6 +17,7 @@ public class SimpleRoad : MonoBehaviour
   public virtual bool canGo(char dir)
   {
     // 타일이 해당 방향으로 이동할 수 있는지 확인
+    Debug.Log($"{dir} // {string.Join(", ", this.directions)}");
     return System.Array.Exists(this.directions, d => d == dir);
   }
 

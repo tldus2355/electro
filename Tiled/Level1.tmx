@@ -23,8 +23,6 @@
  <objectgroup id="2" name="Object Layer 1">
   <object id="3" gid="9" x="192" y="256" width="32" height="32"/>
   <object id="7" gid="10" x="544" y="256" width="32" height="32"/>
-  <object id="8" gid="10" x="544" y="256" width="32" height="32"/>
-  <object id="9" gid="10" x="544" y="256" width="32" height="32"/>
   <object id="10" gid="20" x="320" y="64" width="32" height="32"/>
   <object id="11" gid="21" x="320" y="128" width="32" height="32"/>
   <object id="12" gid="22" x="320" y="192" width="32" height="32">
@@ -48,10 +46,5 @@
    </properties>
   </object>
   <object id="16" gid="19" x="320" y="448" width="32" height="32"/>
-  <object id="17" gid="9" x="192" y="256" width="32" height="32">
-   <properties>
-    <property name="voltage" type="int" value="0"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>

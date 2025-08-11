@@ -7,6 +7,8 @@ public class State : MonoBehaviour
   public Player player;
   public MapLoader map;
 
+  public int logcnt = 0;
+
   void Awake()
   {
     // singleton game manager가 아니라서 싱글톤 아닐수도. 씬마다 따로, 나중에 수정하기
@@ -71,7 +73,7 @@ public class State : MonoBehaviour
       }
       if (this.player.isMoving)
       {
-        if(path[path.Count - 1] == 'f')
+        if (path[path.Count - 1] == 'f')
         {
           Debug.Log("Fuse Over in State.cs");
           this.gameover();
@@ -81,6 +83,11 @@ public class State : MonoBehaviour
         this.player.MoveAnimation(path);
         this.CheckObject(); // 플레이어가 이동한 후에 오브젝트 체크
         this.player.isMoving = false; // 애니메이션이 끝나면 다시 false로 설정
+      }
+
+      if (Input.GetKeyDown(KeyCode.Space))
+      {
+        Debug.Log($"{this.logcnt++} {this.player.voltage}");
       }
     }
   }
@@ -151,6 +158,7 @@ public class State : MonoBehaviour
       // Cap ********
       else if (currentTile is CapTile capTile)
       {
+        Debug.Log($"[LOG] [Cap Tile] CapTile voltage: {capTile.voltage}, isUsed: {capTile.isUsed}");
         if (!capTile.isUsed && capTile.voltage == 0)
         {
           capTile.SetVoltage(player.voltage); // 플레이어의 전압을 CapTile에 설정
@@ -158,7 +166,11 @@ public class State : MonoBehaviour
         }
         else if (!capTile.isUsed)
         {
-          player.addVoltage(capTile.voltage); // 플레이어의 전압 증가
+          player.addVoltage(capTile.voltage); // 플레이어의 전압 증가    
+          capTile.isUsed = true; // VddTile이 사용되었음을 표시
+          capTile.isStop = false; // VddTile은 이제 정지하지 않습니다.
+          
+          Debug.Log("Interacting with CapTile with voltage: " + capTile.voltage);
         }
         else
         {

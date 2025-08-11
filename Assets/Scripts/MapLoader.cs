@@ -102,6 +102,7 @@ public class MapLoader : MonoBehaviour
           case 10: RoadDirections = new char[] { 'l', 'r' }; break;
           case 11: RoadDirections = new char[] { 'u', 'r' }; break;
           case 12: RoadDirections = new char[] { 'l', 'u', 'r' }; break;
+          case 13: RoadDirections = new char[] { 'u', 'd', 'r', 'l' }; break;
           case 16: RoadDirections = new char[] { 'r' }; break;
           default:
             RoadDirections = new char[0];

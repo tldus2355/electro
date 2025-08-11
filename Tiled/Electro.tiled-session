@@ -58,14 +58,13 @@
     "last.imagePath": "D:/Unity/electro/Tiled/TiledsetImg",
     "openFiles": [
         "Level1.tmx",
-        "ElectroTileSet.tsx",
-        "testLevel.tmx"
+        "ElectroTileSet.tsx"
     ],
     "project": "Electro.tiled-project",
     "recentFiles": [
-        "testLevel.tmx",
         "ElectroTileSet.tsx",
         "Level1.tmx",
+        "testLevel.tmx",
         "Level1 - 복사본.tmx",
         "D:/Unity/electro/Assets/Resources/Level1.tmx"
     ]
