@@ -1,6 +1,11 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
     "activeFile": "Level1.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
         "D:/Unity/electro/Assets/Resources/ElectroTileSet.tsx": {
@@ -19,12 +24,34 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Level1 - 복사본.tmx": {
+            "scale": 1.007,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 403.674280039722,
+                "y": 239.8212512413109
+            }
+        },
         "Level1.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 974,
-                "y": 310
+                "x": 399.3333333333333,
+                "y": 239.3333333333333
+            }
+        },
+        "testLevel.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.61275,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 400.6527947776418,
+                "y": 240.71807425540595
             }
         }
     },
@@ -33,10 +60,12 @@
         "Level1.tmx",
         "ElectroTileSet.tsx"
     ],
-    "project": "",
+    "project": "Electro.tiled-project",
     "recentFiles": [
         "ElectroTileSet.tsx",
         "Level1.tmx",
+        "testLevel.tmx",
+        "Level1 - 복사본.tmx",
         "D:/Unity/electro/Assets/Resources/Level1.tmx"
     ]
 }

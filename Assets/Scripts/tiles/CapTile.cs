@@ -31,13 +31,10 @@ public class CapTile : SimpleRoad, IHasInteraction, IHasVoltage
     // 타일과 상호작용하는 로직을 여기에 작성합니다.
     if (!isUsed && voltage == 0)
     {
-
+      
     }
     else if (!isUsed)
     {
-      isUsed = true; // VddTile이 사용되었음을 표시
-      isStop = false; // VddTile은 이제 정지하지 않습니다.
-      Debug.Log("Interacting with CapTile with voltage: " + voltage);
     }
     else
     {

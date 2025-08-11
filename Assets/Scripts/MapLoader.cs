@@ -1,3 +1,4 @@
+#if UNITY_EDITOR //나중엔 빼야됨, 당장 에러 안보려고 임시로 넣음
 using UnityEngine;
 using System.Xml;
 using System.Collections.Generic;
@@ -7,11 +8,25 @@ public class MapLoader : MonoBehaviour
   public SimpleRoad[,] mapdata;//나중에 동적으로 바꾸기, 퍼즐 맵 데이터에 따라 바뀌게
   public GameObject SimpleRoadPrefab;
 
+  public GameObject CreateTile<T>() where T : SimpleRoad
+{
+    GameObject obj = Instantiate(SimpleRoadPrefab);
+    
+    // 기존 SimpleRoad 제거
+    SimpleRoad oldComponent = obj.GetComponent<SimpleRoad>();
+    if (oldComponent != null)
+        DestroyImmediate(oldComponent);
+    
+    // 원하는 타입으로 교체
+    T newComponent = obj.AddComponent<T>();
+    return obj;
+}
+
   public char[] TILE_DIRECTIONS = new char[] { ' ', ' ', 'u', 'd', ' ', 'l', ' ', 'r' };
 
   void Awake()
   {
-  
+
   }
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
@@ -79,7 +94,7 @@ public class MapLoader : MonoBehaviour
         else if (!flipD && flipH && flipV) rotation = 180;
         else if (flipD && !flipH && flipV) rotation = 270;
 
-        char[] RoadDirections = {};
+        char[] RoadDirections = { };
         // tileId에 따라 directions 설정
         switch (actualTileId)
         {
@@ -87,6 +102,7 @@ public class MapLoader : MonoBehaviour
           case 10: RoadDirections = new char[] { 'l', 'r' }; break;
           case 11: RoadDirections = new char[] { 'u', 'r' }; break;
           case 12: RoadDirections = new char[] { 'l', 'u', 'r' }; break;
+          case 13: RoadDirections = new char[] { 'u', 'd', 'r', 'l' }; break;
           case 16: RoadDirections = new char[] { 'r' }; break;
           default:
             RoadDirections = new char[0];
@@ -126,9 +142,10 @@ public class MapLoader : MonoBehaviour
       float y = float.Parse(obj.Attributes["y"].Value);
 
       int tileX = Mathf.FloorToInt(x / 32f);
-      int tileY = Mathf.FloorToInt(y / 32f)-1;
+      int tileY = Mathf.FloorToInt(y / 32f) - 1;
 
       Debug.Log($"GID: {gid}, 위치: ({tileY}, {tileX})");
+      int voltage = 0;
 
       // properties가 있다면 추가 속성 가져오기
       XmlNode propertiesNode = obj.SelectSingleNode("properties");
@@ -139,18 +156,113 @@ public class MapLoader : MonoBehaviour
           string propName = prop.Attributes["name"].Value;
           string propValue = prop.Attributes["value"].Value;
           Debug.Log($"  - {propName}: {propValue}");
+
+          if (propName == "voltage")
+          {
+            // 전압 정보가 있다면 int로 변환
+            if (int.TryParse(propValue, out voltage))
+            {
+              Debug.Log($"전압 정보: {voltage}");
+            }
+            else
+            {
+              Debug.LogWarning($"전압 정보 변환 실패: {propValue}");
+            }
+          }
         }
       }
 
+      // 8: player
+      // 9 : enemy
+      // 17 : vdd
+      // 18 : res
+      // 19 : cap
+      // 20 : diode
+      // 21 : fuse
+      // 22 : ind
+      // 23 : semi
+
+      SimpleRoad Tile = null;
+
       if (gid == 8)
       {
-        SimpleRoad Tile = Instantiate(SimpleRoadPrefab).GetComponent<SimpleRoad>();
-        Tile.Init(mapdata[tileY, tileX].directions, true);
-        mapdata[tileY, tileX] = Tile;
+        Tile = Instantiate(CreateTile<SimpleRoad>()).GetComponent<SimpleRoad>();
+        Tile.Init(mapdata[tileY, tileX].directions, isStart: true);
+        if (Tile == null)
+        {
+          Debug.LogError("SimpleRoad 컴포넌트를 찾을 수 없습니다.");
+          continue;
+        }
       }
+      else if (gid == 9)
+      {
+        Tile = Instantiate(CreateTile<EnemyTile>()).GetComponent<EnemyTile>();
+        if (Tile == null)
+        {
+          Debug.LogError("EnemyTile 컴포넌트를 찾을 수 없습니다.");
+          continue;
+        }
+        EnemyTile.enemyCount++; // EnemyTile이 생성될 때마다 enemyCount 증가
+        Tile.Init(mapdata[tileY, tileX].directions, hasInteraction: true);
+      }
+      else if (gid == 17)
+      {
+        Tile = Instantiate(CreateTile<VddTile>()).GetComponent<VddTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 18)
+      {
+        Tile = Instantiate(CreateTile<ResTile>()).GetComponent<ResTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 19)
+      {
+        Tile = Instantiate(CreateTile<CapTile>()).GetComponent<CapTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 20)
+      {
+        Tile = Instantiate(CreateTile<DiodeTile>()).GetComponent<DiodeTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+        if (Tile is DiodeTile diodeTile)
+          diodeTile.SetDiodeDirection('r'); // 첫 번째 방향을 다이오드 방향으로 설정
+      }
+      else if (gid == 21)
+      {
+        Tile = Instantiate(CreateTile<FuseTile>()).GetComponent<FuseTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 22)
+      {
+        Tile = Instantiate(CreateTile<IndTile>()).GetComponent<IndTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+      else if (gid == 23)
+      {
+        Tile = Instantiate(CreateTile<SemiTile>()).GetComponent<SemiTile>();
+        Tile.Init(mapdata[tileY, tileX].directions);
+      }
+
+      if (Tile is IHasVoltage voltageTile)
+      {
+        // properties가 있다면 전압 정보 설정
+        if (propertiesNode != null)
+        {
+          voltageTile.SetVoltage(voltage);
+        }
+        else
+        {
+          // 전압 정보가 없으면 기본값 설정
+          voltageTile.SetVoltage(0);
+        }
+      }
+
+
+      mapdata[tileY, tileX] = Tile;
+
     }
-        
-      
+
+
   }
 
   private void TestLoadMap()
@@ -173,7 +285,7 @@ public class MapLoader : MonoBehaviour
     //   {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_ED, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM}
     // };
   }
-  
+
   private void createMapObjects()
   {
     // // 맵 오브젝트 생성
@@ -192,3 +304,5 @@ public class MapLoader : MonoBehaviour
     // }
   }
 }
+
+#endif

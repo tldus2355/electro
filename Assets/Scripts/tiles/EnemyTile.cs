@@ -12,7 +12,7 @@ public class EnemyTile : SimpleRoad, IHasInteraction, IHasVoltage
     this.isStart = false; // EnemyTile은 시작 타일이 아닙니다
     this.isStop = true; // EnemyTile은 정지 타일입니다.
     this.hasInteraction = true; // EnemyTile은 상호작용이 가능합니다.
-    enemyCount++; // EnemyTile이 생성될 때마다 enemyCount 증가
+    // enemyCount++; // EnemyTile이 생성될 때마다 enemyCount 증가 *여기서 하면 prefab 만들때도 증가하는듯, MapLoader에서 처리
   }
 
   public void SetVoltage(int voltage)

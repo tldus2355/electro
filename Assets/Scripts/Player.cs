@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     this.mapy = map.mapdata.GetLength(0); //TODO: map 로드이후에 실행이 보장되게 해야 함
     this.mapx = map.mapdata.GetLength(1);
 
-    Debug.Log($"맵 불러오기 성공? (y, x): {mapy}, {mapx}");
+    Debug.Log($"[CHECK] 맵 불러오기 성공? (y, x): {mapy}, {mapx}");
 
     for (int i = 0; i < this.mapy; i++)
     {
@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
   }
   public List<char> Move(char dir, int depth) //유효한 방향인지는 state.cs에서 체크
   {
-    Debug.Log("Player.Move called with dir: " + dir + ", depth: " + depth);
+    // Debug.Log("Player.Move called with dir: " + dir + ", depth: " + depth);
     this.isMoving = true;
     List<char> path = new List<char>(); // Note: null로 초기화하고 path.Add 전에 검사하면 메모리 절약됨
 
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 
     if (dir == 'f')
     {
-      Debug.Log("fuse over");
+      Debug.Log("[LOG] fuse over");
       path.Add('f'); // stop
       return path;
     }
@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
     // int nextgadget = this.map.gadgetmap[this.y, this.x];
     if (nextTile.isStop)
     {
-      Debug.Log("Error: next tile is stop tile");
+      Debug.Log("[LOG] Stop: next tile is stop tile");
       return 's'; // stop
     }
     return nextTile.NextDir(dir, this.voltage);
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
   public void SetVoltage(int voltage = 0)
   {
     this.voltage = voltage; // 플레이어의 전압을 설정
-    Debug.Log("Player voltage set to: " + this.voltage);
+    Debug.Log("[LOG] Player voltage set to: " + this.voltage);
   }
 
   public (int x, int y) GetPosition()
@@ -155,6 +155,6 @@ public class Player : MonoBehaviour
   public void addVoltage(int v)
   {
     this.voltage += v;
-    Debug.Log("Player voltage: " + this.voltage);
+    Debug.Log("[LOG] Player voltage: " + this.voltage);
   }
 }

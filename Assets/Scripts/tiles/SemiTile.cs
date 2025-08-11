@@ -26,11 +26,12 @@ public class SemiTile : SimpleRoad, IHasVoltage
 
   public override bool canGo(char dir)
   {
-    if (this.lastDir == dir)
-    {
-      return true; // 마지막 방향과 같은 방향으로 갈 수 있습니다.
-    }
-    else
+    // if (this.lastDir == dir)
+    // {
+    //   Debug.Log($"[LOG] canGo: lastDir {this.lastDir} is same as dir {dir}");
+    //   return true; // 마지막 방향과 같은 방향으로 갈 수 있습니다.
+    // }
+    // else
     if (this.lastDir == this.OppositeDir(dir))
     {
       return true; // 마지막 방향과 반대 방향으로 갈 수 있습니다.
