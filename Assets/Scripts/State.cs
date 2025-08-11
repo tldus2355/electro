@@ -119,6 +119,8 @@ public class State : MonoBehaviour
         if (this.player.voltage >= enemyTile.voltage)
         {
           // TODO: 현재 타일을 SimpleRoad로 바꾸기
+          Debug.Log(EnemyTile.enemyCount + " enemies remaining.");
+          player.addVoltage(-1 * enemyTile.voltage); // 플레이어의 전압 감소
           EnemyTile.enemyCount--;
           if (EnemyTile.enemyCount <= 0)
           {
@@ -170,19 +172,19 @@ public class State : MonoBehaviour
         if (player.voltage > indTile.voltage)
         {
           player.SetVoltage(indTile.voltage); // 플레이어의 전압을 IndTile의 전압으로 설정
-          Debug.Log("Player voltage set to IndTile voltage: " + indTile.voltage);
+          Debug.Log("[LOG] Player voltage set to IndTile voltage: " + indTile.voltage);
           return; // 전압이 IndTile보다 크면 게임 오버
         }
         indTile.interaction(); // IndTile의 interaction 메서드 호출
       }
       else
       {
-        Debug.Log("No interaction defined for this tile type.");
+        Debug.Log("[LOG] No interaction defined for this tile type.");
       }
     }
     else
     {
-      Debug.Log("No interaction available on this tile.");
+      Debug.Log("[LOG] No interaction available on this tile.");
     }
 
 

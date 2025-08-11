@@ -1,3 +1,4 @@
+#if UNITY_EDITOR //나중엔 빼야됨, 당장 에러 안보려고 임시로 넣음
 using UnityEngine;
 using System.Xml;
 using System.Collections.Generic;
@@ -7,11 +8,25 @@ public class MapLoader : MonoBehaviour
   public SimpleRoad[,] mapdata;//나중에 동적으로 바꾸기, 퍼즐 맵 데이터에 따라 바뀌게
   public GameObject SimpleRoadPrefab;
 
+  public GameObject CreateTile<T>() where T : SimpleRoad
+{
+    GameObject obj = Instantiate(SimpleRoadPrefab);
+    
+    // 기존 SimpleRoad 제거
+    SimpleRoad oldComponent = obj.GetComponent<SimpleRoad>();
+    if (oldComponent != null)
+        DestroyImmediate(oldComponent);
+    
+    // 원하는 타입으로 교체
+    T newComponent = obj.AddComponent<T>();
+    return obj;
+}
+
   public char[] TILE_DIRECTIONS = new char[] { ' ', ' ', 'u', 'd', ' ', 'l', ' ', 'r' };
 
   void Awake()
   {
-  
+
   }
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
@@ -79,7 +94,7 @@ public class MapLoader : MonoBehaviour
         else if (!flipD && flipH && flipV) rotation = 180;
         else if (flipD && !flipH && flipV) rotation = 270;
 
-        char[] RoadDirections = {};
+        char[] RoadDirections = { };
         // tileId에 따라 directions 설정
         switch (actualTileId)
         {
@@ -170,47 +185,60 @@ public class MapLoader : MonoBehaviour
 
       if (gid == 8)
       {
-        Tile = Instantiate(SimpleRoadPrefab).GetComponent<SimpleRoad>();
+        Tile = Instantiate(CreateTile<SimpleRoad>()).GetComponent<SimpleRoad>();
         Tile.Init(mapdata[tileY, tileX].directions, isStart: true);
+        if (Tile == null)
+        {
+          Debug.LogError("SimpleRoad 컴포넌트를 찾을 수 없습니다.");
+          continue;
+        }
       }
       else if (gid == 9)
       {
-        Tile = Instantiate(Resources.Load<GameObject>("EnemyTile")).GetComponent<EnemyTile>();
+        Tile = Instantiate(CreateTile<EnemyTile>()).GetComponent<EnemyTile>();
+        if (Tile == null)
+        {
+          Debug.LogError("EnemyTile 컴포넌트를 찾을 수 없습니다.");
+          continue;
+        }
+        EnemyTile.enemyCount++; // EnemyTile이 생성될 때마다 enemyCount 증가
         Tile.Init(mapdata[tileY, tileX].directions, hasInteraction: true);
       }
       else if (gid == 17)
       {
-        Tile = Instantiate(Resources.Load<GameObject>("VddTile")).GetComponent<VddTile>();
+        Tile = Instantiate(CreateTile<VddTile>()).GetComponent<VddTile>();
         Tile.Init(mapdata[tileY, tileX].directions);
       }
       else if (gid == 18)
       {
-        Tile = Instantiate(Resources.Load<GameObject>("ResistorTile")).GetComponent<ResTile>();
+        Tile = Instantiate(CreateTile<ResTile>()).GetComponent<ResTile>();
         Tile.Init(mapdata[tileY, tileX].directions);
       }
       else if (gid == 19)
       {
-        Tile = Instantiate(Resources.Load<GameObject>("CapacitorTile")).GetComponent<CapTile>();
+        Tile = Instantiate(CreateTile<CapTile>()).GetComponent<CapTile>();
         Tile.Init(mapdata[tileY, tileX].directions);
       }
       else if (gid == 20)
       {
-        Tile = Instantiate(Resources.Load<GameObject>("DiodeTile")).GetComponent<DiodeTile>();
+        Tile = Instantiate(CreateTile<DiodeTile>()).GetComponent<DiodeTile>();
         Tile.Init(mapdata[tileY, tileX].directions);
+        if (Tile is DiodeTile diodeTile)
+          diodeTile.SetDiodeDirection('r'); // 첫 번째 방향을 다이오드 방향으로 설정
       }
       else if (gid == 21)
       {
-        Tile = Instantiate(Resources.Load<GameObject>("FuseTile")).GetComponent<FuseTile>();
+        Tile = Instantiate(CreateTile<FuseTile>()).GetComponent<FuseTile>();
         Tile.Init(mapdata[tileY, tileX].directions);
       }
       else if (gid == 22)
       {
-        Tile = Instantiate(Resources.Load<GameObject>("InductorTile")).GetComponent<IndTile>();
+        Tile = Instantiate(CreateTile<IndTile>()).GetComponent<IndTile>();
         Tile.Init(mapdata[tileY, tileX].directions);
       }
       else if (gid == 23)
       {
-        Tile = Instantiate(Resources.Load<GameObject>("SemiTile")).GetComponent<SemiTile>();
+        Tile = Instantiate(CreateTile<SemiTile>()).GetComponent<SemiTile>();
         Tile.Init(mapdata[tileY, tileX].directions);
       }
 
@@ -230,10 +258,10 @@ public class MapLoader : MonoBehaviour
 
 
       mapdata[tileY, tileX] = Tile;
-      
+
     }
-        
-      
+
+
   }
 
   private void TestLoadMap()
@@ -256,7 +284,7 @@ public class MapLoader : MonoBehaviour
     //   {TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_ED, TILE_EM, TILE_EM, TILE_EM, TILE_EM, TILE_EM}
     // };
   }
-  
+
   private void createMapObjects()
   {
     // // 맵 오브젝트 생성
@@ -275,3 +303,5 @@ public class MapLoader : MonoBehaviour
     // }
   }
 }
+
+#endif
